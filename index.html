@@ -7,35 +7,59 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <div class="logo">MR</div>
-      <div>
-        <h1>MineRise</h1>
-        <p class="muted">Play now: <span id="server-ip">Play.MineRise.Fun</span></p>
-      </div>
-    </div>
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="store.html">Store</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="connect.html">Connect</a>
-      <button id="theme-toggle" title="Toggle theme">🌙</button>
-    </nav>
-  </header>
+  <div class="bg-animated" aria-hidden="true">
+    <div class="fog"></div>
+    <svg class="bat" style="top:6%;left:-20%;" viewBox="0 0 200 100"><path d="M0 60 Q30 20 60 60 T120 60 T180 60" fill="rgba(0,0,0,0.55)"/></svg>
+    <div class="pumpkin" style="right:6%;bottom:6%;"></div>
+  </div>
 
-  <main>
-    <section class="hero">
-      <h2>Welcome to MineRise</h2>
-      <p>Rise through ranks, explore builds, and join our Halloween event!</p>
-      <div class="hero-actions">
-        <button class="btn primary copy-ip">Copy IP</button>
-        <a href="connect.html" class="btn">Join Discord</a>
+  <div class="site">
+    <header>
+      <div class="brand">
+        <div class="logo">MR</div>
+        <div>
+          <h1>MineRise</h1>
+          <p class="muted">Rise. Build. Conquer. • <span id="server-ip">Play.MineRise.Fun</span></p>
+        </div>
       </div>
-    </section>
-  </main>
 
-  <footer>© 2025 MineRise Network</footer>
+      <nav>
+        <a class="nav-btn active" href="index.html">Home</a>
+        <a class="nav-btn" href="store.html">Store</a>
+        <a class="nav-btn" href="gallery.html">Gallery</a>
+        <a class="nav-btn" href="connect.html">Connect</a>
+        <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-left">
+          <div class="kicker">HALLOWEEN EVENT</div>
+          <h2>MineRise — Spooky Season</h2>
+          <p class="muted">Join Play.MineRise.Fun for Halloween events, limited cosmetics and haunted builds. Play with friends and climb the ranks.</p>
+
+          <div class="hero-cta">
+            <button class="btn primary copy-ip">Play • <span class="ip">Play.MineRise.Fun</span></button>
+            <a class="btn" href="connect.html">How to Join</a>
+          </div>
+
+          <div style="margin-top:16px" class="muted">Next event: Oct 20 — Pumpkin PvP • Special aura rewards</div>
+        </div>
+
+        <aside class="hero-right card">
+          <div class="live-preview">Live preview</div>
+          <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+            <div class="muted">Players: <strong id="players">42</strong></div>
+            <div><button class="btn">Vote</button></div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer>© <span id="year"></span> MineRise • <a href="connect.html">Connect</a></footer>
+  </div>
+
   <script src="assets/script.js"></script>
 </body>
 </html>
