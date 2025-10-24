@@ -7,37 +7,56 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <div class="logo">MR</div>
-      <h1>MineRise Store</h1>
-    </div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="store.html" class="active">Store</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="connect.html">Connect</a>
-      <button id="theme-toggle">🌙</button>
-    </nav>
-  </header>
+  <div class="bg-animated" aria-hidden="true">
+    <div class="fog"></div>
+    <svg class="bat" style="top:10%;left:-20%;" viewBox="0 0 200 100"><path d="M0 60 Q30 20 60 60 T120 60 T180 60" fill="rgba(0,0,0,0.55)"/></svg>
+  </div>
 
-  <main>
-    <h2>Ranks & Items</h2>
-    <div class="store-grid">
-      <div class="store-card">
-        <h3>VIP</h3>
-        <p>Exclusive perks & Halloween aura</p>
-        <button class="btn primary">Buy Now</button>
+  <div class="site">
+    <header>
+      <div class="brand">
+        <div class="logo">MR</div>
+        <div><h1>MineRise Store</h1><p class="muted">Buy ranks & cosmetics</p></div>
       </div>
-      <div class="store-card">
-        <h3>MVP</h3>
-        <p>Unlock extra cosmetics & kits</p>
-        <button class="btn primary">Buy Now</button>
-      </div>
-    </div>
-  </main>
 
-  <footer>© 2025 MineRise Store</footer>
+      <nav>
+        <a class="nav-btn" href="index.html">Home</a>
+        <a class="nav-btn active" href="store.html">Store</a>
+        <a class="nav-btn" href="gallery.html">Gallery</a>
+        <a class="nav-btn" href="connect.html">Connect</a>
+        <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Ranks & Specials</h2>
+        <p class="muted">Support the server and unlock Halloween cosmetics.</p>
+
+        <div class="store-grid" style="margin-top:16px">
+          <div class="store-card">
+            <h3>Silver</h3><p class="muted">Starter perks</p>
+            <div style="margin-top:10px"><button class="btn primary">Buy • ₹149</button></div>
+          </div>
+          <div class="store-card">
+            <h3>Gold</h3><p class="muted">Extra perks</p>
+            <div style="margin-top:10px"><button class="btn primary">Buy • ₹349</button></div>
+          </div>
+          <div class="store-card">
+            <h3>Diamond</h3><p class="muted">Premium perks</p>
+            <div style="margin-top:10px"><button class="btn primary">Buy • ₹749</button></div>
+          </div>
+          <div class="store-card">
+            <h3>Titan</h3><p class="muted">All perks</p>
+            <div style="margin-top:10px"><button class="btn primary">Buy • ₹1499</button></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>© <span id="year2"></span> MineRise Store</footer>
+  </div>
+
   <script src="assets/script.js"></script>
 </body>
 </html>
