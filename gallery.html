@@ -7,30 +7,38 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <div class="logo">MR</div>
-      <h1>MineRise Gallery</h1>
-    </div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="store.html">Store</a>
-      <a href="gallery.html" class="active">Gallery</a>
-      <a href="connect.html">Connect</a>
-      <button id="theme-toggle">🌙</button>
-    </nav>
-  </header>
+  <div class="bg-animated" aria-hidden="true"><div class="fog"></div></div>
 
-  <main>
-    <h2>Halloween Builds</h2>
-    <div class="gallery-grid">
-      <img src="images/h1.jpg" alt="Haunted Castle">
-      <img src="images/h2.jpg" alt="Pumpkin Arena">
-      <img src="images/h3.jpg" alt="Ghost Tower">
-    </div>
-  </main>
+  <div class="site">
+    <header>
+      <div class="brand">
+        <div class="logo">MR</div>
+        <div><h1>MineRise Gallery</h1><p class="muted">Community builds</p></div>
+      </div>
 
-  <footer>© 2025 MineRise Gallery</footer>
+      <nav>
+        <a class="nav-btn" href="index.html">Home</a>
+        <a class="nav-btn" href="store.html">Store</a>
+        <a class="nav-btn active" href="gallery.html">Gallery</a>
+        <a class="nav-btn" href="connect.html">Connect</a>
+        <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Featured Halloween Builds</h2>
+        <div class="gallery-grid" style="margin-top:12px">
+          <div class="gallery-tile"><img src="images/h1.jpg" alt="Haunted Castle"></div>
+          <div class="gallery-tile"><img src="images/h2.jpg" alt="Pumpkin Arena"></div>
+          <div class="gallery-tile"><img src="images/h3.jpg" alt="Ghost Tower"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>© <span id="year3"></span> MineRise Gallery</footer>
+  </div>
+
   <script src="assets/script.js"></script>
 </body>
 </html>
