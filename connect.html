@@ -7,28 +7,38 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <div class="logo">MR</div>
-      <h1>Connect with Us</h1>
-    </div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="store.html">Store</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="connect.html" class="active">Connect</a>
-      <button id="theme-toggle">🌙</button>
-    </nav>
-  </header>
+  <div class="bg-animated" aria-hidden="true"><div class="fog"></div></div>
 
-  <main>
-    <h2>Join MineRise</h2>
-    <p>Server IP: <span id="server-ip">Play.MineRise.Fun</span></p>
-    <button class="btn primary copy-ip">Copy IP</button>
-    <a href="https://discord.gg/YOUR-DISCORD" target="_blank" rel="noopener noreferrer" class="btn">Join Discord</a>
-  </main>
+  <div class="site">
+    <header>
+      <div class="brand">
+        <div class="logo">MR</div>
+        <div><h1>Connect</h1><p class="muted">How to join</p></div>
+      </div>
 
-  <footer>© 2025 MineRise</footer>
+      <nav>
+        <a class="nav-btn" href="index.html">Home</a>
+        <a class="nav-btn" href="store.html">Store</a>
+        <a class="nav-btn" href="gallery.html">Gallery</a>
+        <a class="nav-btn active" href="connect.html">Connect</a>
+        <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="page-connect" class="card">
+        <h2>Join MineRise</h2>
+        <p class="muted">Server IP: <strong id="server-ip-2">Play.MineRise.Fun</strong></p>
+        <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn primary copy-ip">Copy IP</button>
+          <a class="btn" href="https://discord.gg/YOUR-DISCORD" target="_blank" rel="noopener noreferrer">Join Discord</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>© <span id="year4"></span> MineRise</footer>
+  </div>
+
   <script src="assets/script.js"></script>
 </body>
 </html>
