@@ -1,0 +1,104 @@
+:root {
+  --bg: #05040a;
+  --card: #0b1220;
+  --text: #eaf6ff;
+  --muted: #a8b5c6;
+  --accent: #ff8b3b;
+  --accent-2: #ff6b6b;
+}
+
+[data-theme="light"] {
+  --bg: #f7fbff;
+  --card: #ffffff;
+  --text: #071426;
+  --muted: #5a6b7d;
+  --accent: #ff6b00;
+  --accent-2: #ff9d3b;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Poppins, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
+  padding: 10px 20px;
+  border-radius: 12px;
+}
+
+.brand { display: flex; gap: 10px; align-items: center; }
+.logo {
+  width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: flex; justify-content: center; align-items: center; border-radius: 8px; font-weight: 900;
+}
+nav a, nav button {
+  color: var(--text);
+  text-decoration: none;
+  margin: 0 5px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+nav a:hover, nav button:hover {
+  background: var(--accent);
+  color: #000;
+}
+nav a.active {
+  background: var(--accent);
+  color: #000;
+}
+
+main { padding: 20px; }
+.btn {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn.primary {
+  background: var(--accent);
+  color: #000;
+}
+.hero { text-align: center; padding: 60px 20px; }
+
+.store-grid, .gallery-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+}
+.store-card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 10px;
+}
+footer {
+  text-align: center;
+  padding: 10px;
+  color: var(--muted);
+}
+
+/* Halloween fog and ghost overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at top, rgba(255,106,0,0.05), transparent 60%),
+              radial-gradient(ellipse at bottom, rgba(255,255,255,0.03), transparent 70%);
+  animation: fog 12s linear infinite;
+  pointer-events: none;
+}
+@keyframes fog { 0%,100%{transform:translateX(0);}50%{transform:translateX(30px);} }
