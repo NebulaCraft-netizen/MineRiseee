@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>About — MineRise</title>
-  <link rel="stylesheet" href="assets/styles.css">
+  <title>MineRise — About</title>
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
   <div id="three-container" aria-hidden="true"></div>
@@ -21,32 +21,21 @@
         <a class="nav-btn" href="index.html">Home</a>
         <a class="nav-btn" href="store.html">Store</a>
         <a class="nav-btn" href="gallery.html">Gallery</a>
-        <a class="nav-btn" href="connect.html">Connect</a>
-        <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
+        <a class="nav-btn active" href="connect.html">Connect</a>
+        <button id="theme-toggle" class="theme-btn">🌙</button>
       </nav>
     </header>
 
-    <main>
-      <section class="about-section card">
-        <h2 class="glow-title">About MineRise</h2>
-        <p>MineRise is a community-driven Minecraft network with epic PvP, special events, and a committed staff team. Each Halloween we run themed events, cosmetics, and rewards for players — join us!</p>
-      </section>
-
-      <section class="card" style="margin-top:12px">
-        <h3>Our values</h3>
-        <ul>
-          <li>Community first</li>
-          <li>Fair competitive gameplay</li>
-          <li>Creative events</li>
-        </ul>
-      </section>
+    <main class="card">
+      <h2>About</h2>
+      <p class="muted">MineRise is a community server focused on building, PvP and seasonal events. This is a prototype site — use it as a template for your server's homepage, store and promo pages.</p>
     </main>
 
-    <footer>© <span id="year4"></span> MineRise</footer>
+    <footer>© MineRise • play.minerise.fun</footer>
   </div>
 
-  <script src="scripts/threeScene.js"></script>
+  <div class="toast" id="toast"></div>
   <script src="scripts/main.js"></script>
-  <script src="assets/script.js"></script>
+  <script src="scripts/threeScene.js"></script>
 </body>
 </html>
