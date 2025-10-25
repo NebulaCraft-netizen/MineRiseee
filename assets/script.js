@@ -1,47 +1,90 @@
-// Shared site JS: theme toggle, copy IP, nav active highlight, small greys
-(function(){
-  // set year placeholders
-  const years = [ 'year', 'year2', 'year3', 'year4' ];
-  years.forEach(id => { const el = document.getElementById(id); if(el) el.textContent = new Date().getFullYear(); });
+/* assets/script.js
+   - Theme toggle (persists to localStorage)
+   - Copy IP buttons
+   - Mark active nav link
+   - Small UI helpers (players mock)
+   - Will not fail if threeScene.js is missing
+*/
 
-  // Theme toggle
-  const toggles = document.querySelectorAll('#theme-toggle');
+(function () {
   const THEME_KEY = 'mr_theme';
-  function setTheme(t){
+  const DEFAULT_IP = 'Play.MineRise.Fun';
+
+  // set year placeholders if present
+  ['year','year2','year3','year4'].forEach(id=>{
+    const e = document.getElementById(id);
+    if(e) e.textContent = new Date().getFullYear();
+  });
+
+  // Theme toggle: find all #theme-toggle buttons (some pages have one)
+  function applyTheme(t){
     document.documentElement.setAttribute('data-theme', t);
-    // update all theme buttons text
-    toggles.forEach(b => { b.textContent = t === 'dark' ? '🌙' : '☀️'; });
+    document.querySelectorAll('#theme-toggle, .theme-btn').forEach(btn=>{
+      btn.textContent = (t === 'dark' ? '🌙' : '☀️');
+      btn.setAttribute('aria-pressed', t === 'dark');
+    });
     localStorage.setItem(THEME_KEY, t);
   }
-  const saved = localStorage.getItem(THEME_KEY) || (window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
-  setTheme(saved);
-  toggles.forEach(btn => btn.addEventListener('click', ()=> setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark')) );
+  const saved = localStorage.getItem(THEME_KEY) || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  applyTheme(saved);
 
-  // Copy IP behavior
-  document.querySelectorAll('.copy-ip').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText('Play.MineRise.Fun');
-        const old = btn.innerHTML;
-        btn.innerHTML = 'Copied!';
-        setTimeout(()=> btn.innerHTML = old, 1500);
-      } catch(e){ console.warn('copy failed', e) }
+  document.querySelectorAll('#theme-toggle, .theme-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=> {
+      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(cur === 'dark' ? 'light' : 'dark');
     });
   });
 
-  // players mock counter (home)
-  const playersEl = document.getElementById('players');
-  if(playersEl) setInterval(()=> { playersEl.textContent = Math.max(0, parseInt(playersEl.textContent||'42') + (Math.random()>0.5?1:-1)); }, 3000);
+  // Copy IP
+  document.querySelectorAll('.copy-ip').forEach(btn=>{
+    btn.addEventListener('click', async (ev) => {
+      try {
+        await navigator.clipboard.writeText(DEFAULT_IP);
+        const old = btn.innerHTML;
+        btn.innerHTML = 'Copied!';
+        setTimeout(()=> btn.innerHTML = old, 1400);
+      } catch (err) {
+        console.warn('Copy failed', err);
+      }
+    });
+  });
 
-  // small accessible aria-live for copy (optional)
-  const live = document.createElement('div'); live.setAttribute('aria-live','polite'); live.style.position='fixed'; live.style.left='-9999px'; document.body.appendChild(live);
-
-  // mark active nav by matching file name
-  (function markActiveNav(){
+  // Mark active nav based on filename
+  (function markActive(){
     const path = location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('nav a.nav-btn').forEach(a => {
+    document.querySelectorAll('nav a').forEach(a=>{
       const href = a.getAttribute('href') || '';
-      if(href.endsWith(path)) { a.classList.add('active'); } else { a.classList.remove('active'); }
+      if(href.endsWith(path) || (path === '' && href.endsWith('index.html')) ) {
+        a.classList.add('active');
+      } else {
+        a.classList.remove('active');
+      }
     });
   })();
+
+  // players counter mock (home page)
+  const playersEl = document.getElementById('players');
+  if(playersEl) {
+    setInterval(()=> {
+      const current = parseInt(playersEl.textContent || '42', 10);
+      const delta = Math.random() > 0.5 ? 1 : -1;
+      playersEl.textContent = Math.max(0, current + delta);
+    }, 3000);
+  }
+
+  // Best-effort: try to init 3D if threeScene.js set window.initThree
+  function tryInitThree() {
+    if (typeof window.initThree === 'function') {
+      try { window.initThree({ ip: DEFAULT_IP }); } catch (e) { console.warn('three init failed', e); }
+    } else {
+      // If not loaded yet, attempt again after a short delay (for pages that load threeScene.js asynchronously)
+      setTimeout(()=> {
+        if (typeof window.initThree === 'function') window.initThree({ ip: DEFAULT_IP });
+      }, 800);
+    }
+  }
+
+  // Run initThree if present
+  tryInitThree();
+
 })();
