@@ -1,20 +1,18 @@
 /* assets/threeScene.js
-   Lightweight three.js scene loader (dynamically loads three.js and GLTF loader)
+   Lightweight three.js scene loader (dynamically loads three.js)
    - Adds a canvas to #three-container (creates container if missing)
-   - Creates simple floating pumpkins (low-poly spheres) and flying bat shapes
+   - Creates simple floating pumpkins and bat shapes
    - Accepts options via initThree({ ip: 'Play.MineRise.Fun' })
+   - NOTE: loads THREE from CDN. If you prefer offline, replace the CDN URL with a local file.
 */
 
 (function () {
-  // CDN URLs - update if you want a different version or local files
+  // CDN URL (non-module version)
   const THREE_CDN = 'https://unpkg.com/three@0.152.2/build/three.min.js';
-  const GLTF_LOADER_CDN = 'https://unpkg.com/three@0.152.2/examples/jsm/loaders/GLTFLoader.js'; // note: module path can't be loaded as classic script easily
-  const ORBIT_CDN = 'https://unpkg.com/three@0.152.2/examples/jsm/controls/OrbitControls.js';
 
   // Utility: append non-module THREE script and return Promise when available
   function loadScript(src) {
     return new Promise((resolve, reject) => {
-      // avoid duplicate
       if (document.querySelector(`script[src="${src}"]`)) return resolve();
       const s = document.createElement('script');
       s.src = src;
@@ -47,7 +45,7 @@
       document.body.appendChild(container);
     }
 
-    // Canvas and renderer
+    // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -69,7 +67,7 @@
     dir.position.set(5, 10, 5);
     scene.add(dir);
 
-    // Ground subtle plane for shadow catch (very low opacity)
+    // Ground subtle plane
     const ground = new THREE.Mesh(
       new THREE.PlaneGeometry(200, 200),
       new THREE.MeshStandardMaterial({ color: 0x000000, transparent: true, opacity: 0.02 })
@@ -78,7 +76,7 @@
     ground.position.y = -3;
     scene.add(ground);
 
-    // Helper: pumpkin group (simple sphere + stem)
+    // Pumpkin maker (sphere + stem)
     function makePumpkin(color = 0xff7a1a, scale = 1) {
       const g = new THREE.Group();
       const bodyGeo = new THREE.SphereGeometry(0.9 * scale, 16, 12);
@@ -96,7 +94,7 @@
       return g;
     }
 
-    // Add several floating pumpkins
+    // Add pumpkins
     const pumpkins = [];
     for (let i = 0; i < 6; i++) {
       const s = 0.7 + Math.random() * 0.9;
@@ -107,12 +105,12 @@
       pumpkins.push({ mesh: p, speed: 0.2 + Math.random() * 0.6, xo: p.position.x, yo: p.position.y });
     }
 
-    // Simple bat geometry (two triangles) as mesh
+    // Simple bat geometry (approx)
     function makeBat() {
       const geom = new THREE.BufferGeometry();
       const vertices = new Float32Array([
-        -0.8, 0, 0,  0, 0.2, 0,   0.8, 0, 0,    // body triangle
-        -0.8, 0, 0, -1.6, -0.6, 0,  0, -0.2, 0  // left wing
+        -0.8, 0, 0,  0, 0.2, 0,   0.8, 0, 0,
+        -0.8, 0, 0, -1.6, -0.6, 0,  0, -0.2, 0
       ]);
       geom.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
       geom.computeVertexNormals();
@@ -131,7 +129,7 @@
       bats.push({ mesh: b, speed: 0.4 + Math.random() * 0.6 });
     }
 
-    // small particle-like point lights to create glow
+    // Glow lights group
     const glow = new THREE.Group();
     for (let i = 0; i < 20; i++) {
       const pl = new THREE.PointLight(0xff8a2b, 0.08, 8);
@@ -152,7 +150,6 @@
         b.mesh.position.x += Math.sin(t * b.speed + i) * 0.02;
         b.mesh.position.y += Math.cos(t * b.speed + i) * 0.01;
         b.mesh.rotation.z = Math.sin(t * b.speed + i) * 0.4;
-        // loop bat through scene
         if (b.mesh.position.x > 16) b.mesh.position.x = -18;
       });
       renderer.render(scene, camera);
@@ -160,7 +157,7 @@
     }
     animate();
 
-    // Resize handling
+    // Resize
     function onResize() {
       renderer.setSize(window.innerWidth, window.innerHeight);
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -168,19 +165,17 @@
     }
     window.addEventListener('resize', onResize);
 
-    // Simple gentle parallax on mouse move (non-pointer events will skip)
+    // Mouse parallax
     window.addEventListener('mousemove', (ev) => {
       const nx = (ev.clientX / window.innerWidth - 0.5) * 2;
       const ny = (ev.clientY / window.innerHeight - 0.5) * 2;
-      // camera subtle move
       camera.position.x += (nx * 0.8 - camera.position.x) * 0.04;
       camera.position.y += (-ny * 0.6 - camera.position.y) * 0.04;
       camera.lookAt(0, 0.8, 0);
     });
 
-    // Expose small API to change IP label (optional)
+    // Update any .ip or #server-ip elements if opts.ip set
     if (opts && typeof opts.ip === 'string') {
-      // find any .ip or #server-ip elements and update
       const ipEls = document.querySelectorAll('.ip, #server-ip, #server-ip-2');
       ipEls.forEach(el => {
         if (el.tagName.toLowerCase() === 'input') el.value = opts.ip;
@@ -188,10 +183,8 @@
       });
     }
 
-    // Done
     console.log('threeScene initialized');
     return { scene, camera, renderer };
   };
 
 })();
-
