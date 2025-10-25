@@ -3,8 +3,43 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MineRise — Store</title>
-  <link rel="stylesheet" href="assets/styles.css">
+  <title>MineRise — Store (Standalone)</title>
+
+  <style>
+    :root{
+      --bg-0:#070617; --bg-1:#0b1222; --card:#071a2b; --muted:#b6c6db;
+      --accent-1:#ff8a2b; --accent-2:#ff5d3a; --text:#eef6ff; --radius:14px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+    [data-theme="light"]{ --bg-0:#f7fbff; --bg-1:#f2f6fb; --card:#fff; --muted:#445a73; --text:#071026; --accent-1:#ff7a1a; --accent-2:#ff9b4a; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{ min-height:100vh; background: radial-gradient(800px 420px at 10% 6%, rgba(255,138,43,0.06), transparent 6%), linear-gradient(180deg,var(--bg-0) 0%, var(--bg-1) 70%); color:var(--text); padding:24px; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+
+    .site{ width:1200px; max-width:96%; margin:0 auto; display:flex; flex-direction:column; gap:18px; position:relative; z-index:1; }
+    header{ display:flex; align-items:center; justify-content:space-between; padding:14px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border:1px solid rgba(255,255,255,0.03) }
+    .brand{ display:flex; gap:12px; align-items:center }
+    .logo{ width:64px; height:64px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:900; color:#05121a; background:linear-gradient(135deg,var(--accent-1),var(--accent-2)); box-shadow:0 10px 30px rgba(255,106,43,0.08) }
+    header h1{ font-size:22px; margin:0 }
+    header p{ font-size:12px; color:var(--muted); margin-top:4px }
+    nav{ display:flex; gap:10px; align-items:center }
+    .nav-btn{ padding:8px 12px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.03); color:var(--text); text-decoration:none; font-weight:700; cursor:pointer}
+    .nav-btn.active{ background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#07121a; box-shadow:0 10px 30px rgba(255,106,43,0.12) }
+    .theme-btn{ padding:8px 10px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.03); cursor:pointer }
+    #three-container{ position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden }
+    .fog-overlay{ position:fixed; left:-8%; right:-8%; bottom:-10%; height:420px; pointer-events:none; background:radial-gradient(ellipse at center, rgba(255,106,0,0.05), transparent 30%); filter:blur(40px); opacity:.95; mix-blend-mode:screen; z-index:0; animation:slow-drift 16s linear infinite }
+    @keyframes slow-drift{0%{transform:translateX(0)}50%{transform:translateX(36px)}100%{transform:translateX(0)}}
+
+    .card{ background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.02) }
+    .store-grid{ display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:12px }
+    .store-card{ background:var(--card); padding:18px; border-radius:12px; display:flex; flex-direction:column; gap:10px }
+    .store-card h3{ margin:0 }
+    .btn{ padding:10px 14px; border-radius:12px; background:var(--card); border:1px solid rgba(255,255,255,0.03); color:var(--text); cursor:pointer; font-weight:700 }
+    .btn.primary{ background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#07121a; box-shadow:0 14px 40px rgba(255,106,43,0.12) }
+
+    footer{ text-align:left; color:var(--muted); padding:12px; margin-top:8px }
+    @media (max-width:900px){ header h1{ font-size:18px } .store-grid{ grid-template-columns:1fr } }
+  </style>
 </head>
 <body>
   <div id="three-container" aria-hidden="true"></div>
@@ -14,49 +49,88 @@
     <header>
       <div class="brand">
         <div class="logo">MR</div>
-        <div><h1>MineRise Store</h1><p class="muted">Buy ranks & cosmetics</p></div>
+        <div><h1>MineRise Store</h1><p class="muted">Buy ranks & cosmetics • Play.MineRise.Fun</p></div>
       </div>
 
       <nav>
         <a class="nav-btn" href="index.html">Home</a>
-        <a class="nav-btn" href="store.html">Store</a>
+        <a class="nav-btn active" href="store.html">Store</a>
         <a class="nav-btn" href="gallery.html">Gallery</a>
         <a class="nav-btn" href="connect.html">Connect</a>
-        <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
+        <button id="theme-toggle" class="theme-btn">🌙</button>
       </nav>
     </header>
 
     <main>
       <section class="card">
         <h2>Ranks & Specials</h2>
-        <p class="muted">Support the server and unlock Halloween cosmetics.</p>
+        <p class="muted">Support MineRise and unlock Halloween cosmetics.</p>
 
-        <div class="store-grid" style="margin-top:16px">
-          <div class="store-card tilt lift">
-            <h3>Silver</h3><p class="muted">Starter perks</p>
-            <div style="margin-top:10px"><button class="btn primary">Buy • ₹149</button></div>
+        <div class="store-grid">
+          <div class="store-card tilt">
+            <h3>Silver</h3>
+            <p class="muted">Starter perks • Priority Queue</p>
+            <div style="margin-top:auto"><button class="btn primary">Buy • ₹149</button></div>
           </div>
-          <div class="store-card tilt lift">
-            <h3>Gold</h3><p class="muted">Extra perks</p>
-            <div style="margin-top:10px"><button class="btn primary">Buy • ₹349</button></div>
+
+          <div class="store-card tilt">
+            <h3>Gold</h3>
+            <p class="muted">Extra perks • Custom Tag</p>
+            <div style="margin-top:auto"><button class="btn primary">Buy • ₹349</button></div>
           </div>
-          <div class="store-card tilt lift">
-            <h3>Diamond</h3><p class="muted">Premium perks</p>
-            <div style="margin-top:10px"><button class="btn primary">Buy • ₹749</button></div>
+
+          <div class="store-card tilt">
+            <h3>Diamond</h3>
+            <p class="muted">Mounts & exclusive kit</p>
+            <div style="margin-top:auto"><button class="btn primary">Buy • ₹749</button></div>
           </div>
-          <div class="store-card tilt lift">
-            <h3>Titan</h3><p class="muted">All perks</p>
-            <div style="margin-top:10px"><button class="btn primary">Buy • ₹1499</button></div>
+
+          <div class="store-card tilt">
+            <h3>Titan</h3>
+            <p class="muted">VIP island & moderator channel</p>
+            <div style="margin-top:auto"><button class="btn primary">Buy • ₹1499</button></div>
           </div>
         </div>
       </section>
     </main>
 
-    <footer>© <span id="year2"></span> MineRise Store</footer>
+    <footer>© <span id="year2"></span> MineRise Store • play.minerise.fun</footer>
   </div>
 
-  <script src="scripts/threeScene.js"></script>
-  <script src="scripts/main.js"></script>
-  <script src="assets/script.js"></script>
+  <!-- Inline scripts (same behavior / 3D loader) -->
+  <script>
+    (function () {
+      const THEME_KEY = 'mr_theme';
+      const DEFAULT_IP = 'Play.MineRise.Fun';
+      ['year','year2','year3','year4'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=new Date().getFullYear(); });
+      function applyTheme(t){ document.documentElement.setAttribute('data-theme', t); document.querySelectorAll('#theme-toggle, .theme-btn').forEach(btn=>{ btn.textContent = (t==='dark'?'🌙':'☀️'); btn.setAttribute('aria-pressed', t==='dark'); }); localStorage.setItem(THEME_KEY,t); }
+      const saved = localStorage.getItem(THEME_KEY) || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(saved);
+      document.querySelectorAll('#theme-toggle, .theme-btn').forEach(btn=>btn.addEventListener('click', ()=>{ const cur=document.documentElement.getAttribute('data-theme')||'dark'; applyTheme(cur==='dark'?'light':'dark'); }));
+      document.querySelectorAll('.tilt').forEach(el=>{ el.addEventListener('mousemove', e=>{ const r=el.getBoundingClientRect(); const px=(e.clientX-r.left)/r.width; const py=(e.clientY-r.top)/r.height; const rx=(py-0.5)*10; const ry=(px-0.5)*-14; el.style.transform=`perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`; el.style.boxShadow='0 30px 80px rgba(2,8,20,0.48)'; }); el.addEventListener('mouseleave', ()=>{ el.style.transform=''; el.style.boxShadow=''; }); });
+      // init three
+      setTimeout(()=>{ if(typeof window.initThree==='function') try{ window.initThree({ ip: DEFAULT_IP }); }catch(e){ console.warn(e); } },700);
+    })();
+  </script>
+
+  <script>
+    /* threeScene inline loader — minimal copy (loads three.js from CDN and initializes) */
+    (function(){
+      const THREE_CDN='https://unpkg.com/three@0.152.2/build/three.min.js';
+      function loadScript(src){ return new Promise((res,rej)=>{ if(document.querySelector(`script[src="${src}"]`)) return res(); const s=document.createElement('script'); s.src=src; s.async=true; s.onload=()=>res(); s.onerror=(e)=>rej(e); document.head.appendChild(s); }); }
+      window.initThree = window.initThree || (async function initThree(opts={}) {
+        if(typeof window.THREE==='undefined'){ try{ await loadScript(THREE_CDN); }catch(e){ console.warn('three load failed',e); return; } }
+        const THREE = window.THREE; if(!THREE) return;
+        let container = document.getElementById('three-container'); if(!container){ container = document.createElement('div'); container.id='three-container'; document.body.appendChild(container); }
+        if(container.__initialized) return; container.__initialized=true;
+        const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true }); renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2)); renderer.domElement.style.position='fixed'; renderer.domElement.style.inset='0'; renderer.domElement.style.zIndex='0'; renderer.domElement.style.pointerEvents='none'; container.appendChild(renderer.domElement);
+        const scene=new THREE.Scene(); const camera=new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 2000); camera.position.set(0,2.2,7);
+        const amb=new THREE.AmbientLight(0xffffff,0.6); scene.add(amb); const dir=new THREE.DirectionalLight(0xffb86b,0.9); dir.position.set(5,10,5); scene.add(dir);
+        function makePumpkin(s=1,c=0xff8a2b){ const g=new THREE.Group(); const b=new THREE.Mesh(new THREE.SphereGeometry(0.9*s,16,12), new THREE.MeshStandardMaterial({color:c,roughness:0.6,metalness:0.05})); b.scale.y=0.8; g.add(b); const st=new THREE.Mesh(new THREE.CylinderGeometry(0.06*s,0.12*s,0.35*s,8), new THREE.MeshStandardMaterial({color:0x3b2b18})); st.position.y=0.9*s; st.rotation.x=0.2; g.add(st); return g; }
+        const pumpkins=[]; for(let i=0;i<5;i++){ const s=0.6+Math.random()*0.9; const p=makePumpkin(s); p.position.set((Math.random()-0.5)*8,(Math.random()-0.25)*2+1,(Math.random()-0.5)*6); p.rotation.y=Math.random()*Math.PI*2; scene.add(p); pumpkins.push({mesh:p,speed:0.2+Math.random()*0.6,yo:p.position.y}); }
+        let t=0; function animate(){ t+=0.01; pumpkins.forEach((p,i)=>{ p.mesh.position.y = p.yo + Math.sin(t*p.speed+i)*0.22; p.mesh.rotation.y += 0.002; }); renderer.render(scene,camera); requestAnimationFrame(animate); } animate();
+        window.addEventListener('resize', ()=>{ renderer.setSize(window.innerWidth, window.innerHeight); camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); });
+      });
+    })();
+  </script>
 </body>
 </html>
