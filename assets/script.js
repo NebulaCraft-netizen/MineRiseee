@@ -3,7 +3,7 @@
    - Copy IP buttons
    - Mark active nav link
    - Small UI helpers (players mock)
-   - Will not fail if threeScene.js is missing
+   - Attempts to init 3D if threeScene.js is present
 */
 
 (function () {
@@ -52,9 +52,10 @@
   // Mark active nav based on filename
   (function markActive(){
     const path = location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('nav a').forEach(a=>{
+    document.querySelectorAll('nav a, .nav-btn, .navbar a').forEach(a=>{
       const href = a.getAttribute('href') || '';
-      if(href.endsWith(path) || (path === '' && href.endsWith('index.html')) ) {
+      // match index.html and empty path
+      if (href.endsWith(path) || (path === '' && href.endsWith('index.html'))) {
         a.classList.add('active');
       } else {
         a.classList.remove('active');
