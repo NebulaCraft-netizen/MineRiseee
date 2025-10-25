@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MineRise — Store (Standalone)</title>
+  <title>MineRise — Store (Ranks Updated)</title>
 
   <style>
     :root{
@@ -11,34 +11,93 @@
       --accent-1:#ff8a2b; --accent-2:#ff5d3a; --text:#eef6ff; --radius:14px;
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
     }
-    [data-theme="light"]{ --bg-0:#f7fbff; --bg-1:#f2f6fb; --card:#fff; --muted:#445a73; --text:#071026; --accent-1:#ff7a1a; --accent-2:#ff9b4a; }
+    [data-theme="light"]{
+      --bg-0:#f7fbff; --bg-1:#f2f6fb; --card:#ffffff; --muted:#445a73; --text:#071026;
+    }
+
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
-    body{ min-height:100vh; background: radial-gradient(800px 420px at 10% 6%, rgba(255,138,43,0.06), transparent 6%), linear-gradient(180deg,var(--bg-0) 0%, var(--bg-1) 70%); color:var(--text); padding:24px; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(800px 420px at 10% 6%, rgba(255,138,43,0.03), transparent 6%),
+        linear-gradient(180deg,var(--bg-0) 0%, var(--bg-1) 70%);
+      color:var(--text); padding:24px;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
 
     .site{ width:1200px; max-width:96%; margin:0 auto; display:flex; flex-direction:column; gap:18px; position:relative; z-index:1; }
+
     header{ display:flex; align-items:center; justify-content:space-between; padding:14px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border:1px solid rgba(255,255,255,0.03) }
     .brand{ display:flex; gap:12px; align-items:center }
     .logo{ width:64px; height:64px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:900; color:#05121a; background:linear-gradient(135deg,var(--accent-1),var(--accent-2)); box-shadow:0 10px 30px rgba(255,106,43,0.08) }
     header h1{ font-size:22px; margin:0 }
     header p{ font-size:12px; color:var(--muted); margin-top:4px }
+
     nav{ display:flex; gap:10px; align-items:center }
     .nav-btn{ padding:8px 12px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.03); color:var(--text); text-decoration:none; font-weight:700; cursor:pointer}
     .nav-btn.active{ background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#07121a; box-shadow:0 10px 30px rgba(255,106,43,0.12) }
     .theme-btn{ padding:8px 10px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.03); cursor:pointer }
+
     #three-container{ position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden }
-    .fog-overlay{ position:fixed; left:-8%; right:-8%; bottom:-10%; height:420px; pointer-events:none; background:radial-gradient(ellipse at center, rgba(255,106,0,0.05), transparent 30%); filter:blur(40px); opacity:.95; mix-blend-mode:screen; z-index:0; animation:slow-drift 16s linear infinite }
+    .fog-overlay{ position:fixed; left:-8%; right:-8%; bottom:-10%; height:420px; pointer-events:none; background:radial-gradient(ellipse at center, rgba(255,106,0,0.04), transparent 30%); filter:blur(40px); opacity:.95; mix-blend-mode:screen; z-index:0; animation:slow-drift 16s linear infinite }
     @keyframes slow-drift{0%{transform:translateX(0)}50%{transform:translateX(36px)}100%{transform:translateX(0)}}
 
     .card{ background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.02) }
-    .store-grid{ display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:12px }
-    .store-card{ background:var(--card); padding:18px; border-radius:12px; display:flex; flex-direction:column; gap:10px }
-    .store-card h3{ margin:0 }
-    .btn{ padding:10px 14px; border-radius:12px; background:var(--card); border:1px solid rgba(255,255,255,0.03); color:var(--text); cursor:pointer; font-weight:700 }
-    .btn.primary{ background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#07121a; box-shadow:0 14px 40px rgba(255,106,43,0.12) }
+    .store-grid{ display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin-top:18px; align-items:start }
+
+    /* Rank card base */
+    .rank-card{
+      position:relative; overflow:hidden; border-radius:14px; padding:18px;
+      display:flex; flex-direction:column; gap:10px; min-height:220px;
+      color:var(--text); box-shadow:0 8px 30px rgba(2,8,20,0.5); transform:translateZ(0);
+    }
+    .rank-title{ font-size:18px; font-weight:800; letter-spacing:0.6px; margin:0; }
+    .rank-desc{ color:rgba(255,255,255,0.85); opacity:0.95; font-size:13px }
+    .rank-footer{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:10px }
+
+    .rank-badge{
+      padding:6px 10px;border-radius:999px;font-weight:800;font-size:13px;
+      background:rgba(0,0,0,0.15);backdrop-filter: blur(6px);
+    }
+
+    /* Specific rank styles */
+    /* Bat - black / lowest */
+    .rank-bat{
+      background: linear-gradient(180deg, rgba(18,18,18,0.98), rgba(6,6,6,0.9));
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .rank-bat .rank-badge{ background: rgba(255,255,255,0.04); color:#fff }
+
+    /* Warden - purple */
+    .rank-warden{
+      background: linear-gradient(180deg, rgba(58,20,85,0.92), rgba(30,10,70,0.88));
+      border: 1px solid rgba(120,70,180,0.12);
+    }
+    .rank-warden .rank-badge{ background: rgba(255,255,255,0.06); color:#ffffff }
+
+    /* Rise - pink to white gradient */
+    .rank-rise{
+      background: linear-gradient(120deg, #ff6fa8 0%, #ffd5e8 50%, #ffffff 100%);
+      color:#07121a;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .rank-rise .rank-badge{ background: rgba(255,255,255,0.9); color:#07121a }
+
+    /* CTA button in card */
+    .card-cta{ padding:10px 14px; border-radius:10px; font-weight:800; cursor:pointer; border:0 }
+    .card-cta.ghost{ background: rgba(255,255,255,0.06); color:var(--text) }
+    .card-cta.primary{ background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#07121a }
 
     footer{ text-align:left; color:var(--muted); padding:12px; margin-top:8px }
-    @media (max-width:900px){ header h1{ font-size:18px } .store-grid{ grid-template-columns:1fr } }
+
+    /* micro interactions helpers */
+    .lift{ transition: transform .22s, box-shadow .22s; }
+    .tilt{ transition: transform .22s, box-shadow .22s; }
+
+    @media (max-width:900px){
+      .store-grid{ grid-template-columns:1fr }
+    }
   </style>
 </head>
 <body>
@@ -49,7 +108,7 @@
     <header>
       <div class="brand">
         <div class="logo">MR</div>
-        <div><h1>MineRise Store</h1><p class="muted">Buy ranks & cosmetics • Play.MineRise.Fun</p></div>
+        <div><h1>MineRise Store</h1><p class="muted">Ranks & Halloween Specials • Play.MineRise.Fun</p></div>
       </div>
 
       <nav>
@@ -63,33 +122,90 @@
 
     <main>
       <section class="card">
-        <h2>Ranks & Specials</h2>
-        <p class="muted">Support MineRise and unlock Halloween cosmetics.</p>
+        <h2>Ranks — Claim your title</h2>
+        <p class="muted">Choose a rank and show off in MineRise. Halloween colors and seasonal perks included.</p>
 
         <div class="store-grid">
-          <div class="store-card tilt">
-            <h3>Silver</h3>
-            <p class="muted">Starter perks • Priority Queue</p>
-            <div style="margin-top:auto"><button class="btn primary">Buy • ₹149</button></div>
+          <!-- BAT (lowest) - Black -->
+          <div class="rank-card rank-bat tilt lift" data-rank="bat" aria-label="Bat rank - lowest">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+              <div>
+                <div class="rank-title">🦇 Bat</div>
+                <div class="rank-desc">Entry rank — basics & starter cosmetics.</div>
+              </div>
+              <div class="rank-badge">Lowest</div>
+            </div>
+
+            <div style="margin-top:12px;color:rgba(255,255,255,0.9)">
+              <ul style="margin:0;padding-left:18px;color:rgba(255,255,255,0.8)">
+                <li>Starter kit</li>
+                <li>Access to seasonal events</li>
+              </ul>
+            </div>
+
+            <div class="rank-footer">
+              <div style="font-weight:800;font-size:16px">₹79</div>
+              <div style="display:flex;gap:8px">
+                <button class="card-cta ghost" onclick="alert('Gift flow placeholder')">Gift</button>
+                <button class="card-cta primary" onclick="alert('Checkout placeholder — Bat')">Buy</button>
+              </div>
+            </div>
           </div>
 
-          <div class="store-card tilt">
-            <h3>Gold</h3>
-            <p class="muted">Extra perks • Custom Tag</p>
-            <div style="margin-top:auto"><button class="btn primary">Buy • ₹349</button></div>
+          <!-- WARDEN - Purple -->
+          <div class="rank-card rank-warden tilt lift" data-rank="warden" aria-label="Warden rank - purple">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+              <div>
+                <div class="rank-title">🛡️ Warden</div>
+                <div class="rank-desc">Balanced mid-tier rank with extra perks.</div>
+              </div>
+              <div class="rank-badge">Popular</div>
+            </div>
+
+            <div style="margin-top:12px;color:rgba(255,255,255,0.95)">
+              <ul style="margin:0;padding-left:18px;color:rgba(255,255,255,0.85)">
+                <li>Priority queue</li>
+                <li>Custom tag & extra claims</li>
+                <li>Exclusive Halloween aura</li>
+              </ul>
+            </div>
+
+            <div class="rank-footer">
+              <div style="font-weight:900;font-size:16px">₹349</div>
+              <div style="display:flex;gap:8px">
+                <button class="card-cta ghost" onclick="alert('Gift flow placeholder')">Gift</button>
+                <button class="card-cta primary" onclick="alert('Checkout placeholder — Warden')">Buy</button>
+              </div>
+            </div>
           </div>
 
-          <div class="store-card tilt">
-            <h3>Diamond</h3>
-            <p class="muted">Mounts & exclusive kit</p>
-            <div style="margin-top:auto"><button class="btn primary">Buy • ₹749</button></div>
+          <!-- RISE - Pink → White -->
+          <div class="rank-card rank-rise tilt lift" data-rank="rise" aria-label="Rise rank - pink to white">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+              <div>
+                <div class="rank-title">🌸 Rise</div>
+                <div class="rank-desc" style="opacity:0.95">Premium rank with top cosmetics and perks (pink → white).</div>
+              </div>
+              <div class="rank-badge">Premium</div>
+            </div>
+
+            <div style="margin-top:12px;color:rgba(0,0,0,0.85)">
+              <ul style="margin:0;padding-left:18px;color:rgba(0,0,0,0.78)">
+                <li>VIP island</li>
+                <li>Exclusive mounts & cosmetics</li>
+                <li>Access to staff channel</li>
+              </ul>
+            </div>
+
+            <div class="rank-footer">
+              <div style="font-weight:900;font-size:16px">₹1499</div>
+              <div style="display:flex;gap:8px">
+                <button class="card-cta ghost" onclick="alert('Gift flow placeholder')">Gift</button>
+                <button class="card-cta primary" onclick="alert('Checkout placeholder — Rise')">Buy</button>
+              </div>
+            </div>
           </div>
 
-          <div class="store-card tilt">
-            <h3>Titan</h3>
-            <p class="muted">VIP island & moderator channel</p>
-            <div style="margin-top:auto"><button class="btn primary">Buy • ₹1499</button></div>
-          </div>
         </div>
       </section>
     </main>
@@ -97,38 +213,65 @@
     <footer>© <span id="year2"></span> MineRise Store • play.minerise.fun</footer>
   </div>
 
-  <!-- Inline scripts (same behavior / 3D loader) -->
+  <!-- Inline JS: theme, tilt, init three (same pattern as index) -->
   <script>
+    // theme + year + copy-ip support (copy not used in store but kept)
     (function () {
       const THEME_KEY = 'mr_theme';
       const DEFAULT_IP = 'Play.MineRise.Fun';
-      ['year','year2','year3','year4'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=new Date().getFullYear(); });
-      function applyTheme(t){ document.documentElement.setAttribute('data-theme', t); document.querySelectorAll('#theme-toggle, .theme-btn').forEach(btn=>{ btn.textContent = (t==='dark'?'🌙':'☀️'); btn.setAttribute('aria-pressed', t==='dark'); }); localStorage.setItem(THEME_KEY,t); }
-      const saved = localStorage.getItem(THEME_KEY) || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); applyTheme(saved);
-      document.querySelectorAll('#theme-toggle, .theme-btn').forEach(btn=>btn.addEventListener('click', ()=>{ const cur=document.documentElement.getAttribute('data-theme')||'dark'; applyTheme(cur==='dark'?'light':'dark'); }));
-      document.querySelectorAll('.tilt').forEach(el=>{ el.addEventListener('mousemove', e=>{ const r=el.getBoundingClientRect(); const px=(e.clientX-r.left)/r.width; const py=(e.clientY-r.top)/r.height; const rx=(py-0.5)*10; const ry=(px-0.5)*-14; el.style.transform=`perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`; el.style.boxShadow='0 30px 80px rgba(2,8,20,0.48)'; }); el.addEventListener('mouseleave', ()=>{ el.style.transform=''; el.style.boxShadow=''; }); });
-      // init three
-      setTimeout(()=>{ if(typeof window.initThree==='function') try{ window.initThree({ ip: DEFAULT_IP }); }catch(e){ console.warn(e); } },700);
+      ['year','year2','year3','year4'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent = new Date().getFullYear(); });
+      function applyTheme(t){ document.documentElement.setAttribute('data-theme', t); document.querySelectorAll('#theme-toggle, .theme-btn').forEach(btn=>{ btn.textContent = (t === 'dark' ? '🌙' : '☀️'); btn.setAttribute('aria-pressed', t === 'dark'); }); localStorage.setItem(THEME_KEY, t); }
+      const saved = localStorage.getItem(THEME_KEY) || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      applyTheme(saved);
+      document.querySelectorAll('#theme-toggle, .theme-btn').forEach(btn=> btn.addEventListener('click', ()=> { const cur = document.documentElement.getAttribute('data-theme') || 'dark'; applyTheme(cur === 'dark' ? 'light' : 'dark'); }));
+
+      // tilt + lift micro-interactions
+      document.querySelectorAll('.tilt').forEach(el=>{
+        el.addEventListener('mousemove', (e) => {
+          const r = el.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          const rx = (py - 0.5) * 10;
+          const ry = (px - 0.5) * -14;
+          el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+          el.style.boxShadow = '0 30px 80px rgba(2,8,20,0.48)';
+        });
+        el.addEventListener('mouseleave', ()=>{ el.style.transform=''; el.style.boxShadow=''; });
+      });
+
+      // try init three if available
+      setTimeout(()=>{ if(typeof window.initThree === 'function') try{ window.initThree({ ip: DEFAULT_IP }); } catch(e){ console.warn('three init error', e); } }, 700);
     })();
   </script>
 
+  <!-- minimal three loader (same as index) -->
   <script>
-    /* threeScene inline loader — minimal copy (loads three.js from CDN and initializes) */
     (function(){
-      const THREE_CDN='https://unpkg.com/three@0.152.2/build/three.min.js';
+      const THREE_CDN = 'https://unpkg.com/three@0.152.2/build/three.min.js';
       function loadScript(src){ return new Promise((res,rej)=>{ if(document.querySelector(`script[src="${src}"]`)) return res(); const s=document.createElement('script'); s.src=src; s.async=true; s.onload=()=>res(); s.onerror=(e)=>rej(e); document.head.appendChild(s); }); }
-      window.initThree = window.initThree || (async function initThree(opts={}) {
-        if(typeof window.THREE==='undefined'){ try{ await loadScript(THREE_CDN); }catch(e){ console.warn('three load failed',e); return; } }
+      window.initThree = window.initThree || (async function initThree(opts = {}) {
+        if (typeof window.THREE === 'undefined') { try { await loadScript(THREE_CDN); } catch(e){ console.warn('three load failed', e); return; } }
         const THREE = window.THREE; if(!THREE) return;
         let container = document.getElementById('three-container'); if(!container){ container = document.createElement('div'); container.id='three-container'; document.body.appendChild(container); }
-        if(container.__initialized) return; container.__initialized=true;
-        const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true }); renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2)); renderer.domElement.style.position='fixed'; renderer.domElement.style.inset='0'; renderer.domElement.style.zIndex='0'; renderer.domElement.style.pointerEvents='none'; container.appendChild(renderer.domElement);
-        const scene=new THREE.Scene(); const camera=new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 2000); camera.position.set(0,2.2,7);
-        const amb=new THREE.AmbientLight(0xffffff,0.6); scene.add(amb); const dir=new THREE.DirectionalLight(0xffb86b,0.9); dir.position.set(5,10,5); scene.add(dir);
-        function makePumpkin(s=1,c=0xff8a2b){ const g=new THREE.Group(); const b=new THREE.Mesh(new THREE.SphereGeometry(0.9*s,16,12), new THREE.MeshStandardMaterial({color:c,roughness:0.6,metalness:0.05})); b.scale.y=0.8; g.add(b); const st=new THREE.Mesh(new THREE.CylinderGeometry(0.06*s,0.12*s,0.35*s,8), new THREE.MeshStandardMaterial({color:0x3b2b18})); st.position.y=0.9*s; st.rotation.x=0.2; g.add(st); return g; }
-        const pumpkins=[]; for(let i=0;i<5;i++){ const s=0.6+Math.random()*0.9; const p=makePumpkin(s); p.position.set((Math.random()-0.5)*8,(Math.random()-0.25)*2+1,(Math.random()-0.5)*6); p.rotation.y=Math.random()*Math.PI*2; scene.add(p); pumpkins.push({mesh:p,speed:0.2+Math.random()*0.6,yo:p.position.y}); }
-        let t=0; function animate(){ t+=0.01; pumpkins.forEach((p,i)=>{ p.mesh.position.y = p.yo + Math.sin(t*p.speed+i)*0.22; p.mesh.rotation.y += 0.002; }); renderer.render(scene,camera); requestAnimationFrame(animate); } animate();
-        window.addEventListener('resize', ()=>{ renderer.setSize(window.innerWidth, window.innerHeight); camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); });
+        if(container.__initialized) return; container.__initialized = true;
+        const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.domElement.style.position='fixed'; renderer.domElement.style.inset='0'; renderer.domElement.style.zIndex='0'; renderer.domElement.style.pointerEvents='none';
+        container.appendChild(renderer.domElement);
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 2000);
+        camera.position.set(0,2.2,7);
+        scene.add(new THREE.AmbientLight(0xffffff,0.6));
+        const dir = new THREE.DirectionalLight(0xffb86b, 0.9); dir.position.set(5,10,5); scene.add(dir);
+
+        function makePumpkin(s=1,c=0xff8a2b){ const g=new THREE.Group(); const b=new THREE.Mesh(new THREE.SphereGeometry(0.9*s,16,12), new THREE.MeshStandardMaterial({ color:c, roughness:0.6, metalness:0.05 })); b.scale.y = 0.8; g.add(b); const st = new THREE.Mesh(new THREE.CylinderGeometry(0.06*s,0.12*s,0.35*s,8), new THREE.MeshStandardMaterial({ color:0x3b2b18 })); st.position.y=0.9*s; st.rotation.x=0.2; g.add(st); return g; }
+
+        const pumpkins = []; for(let i=0;i<6;i++){ const s=0.6+Math.random()*0.9; const p=makePumpkin(s); p.position.set((Math.random()-0.5)*8,(Math.random()-0.25)*2+1,(Math.random()-0.5)*6); p.rotation.y=Math.random()*Math.PI*2; scene.add(p); pumpkins.push({mesh:p,speed:0.2+Math.random()*0.6,yo:p.position.y}); }
+
+        let t=0; function animate(){ t+=0.01; pumpkins.forEach((p,i)=>{ p.mesh.position.y = p.yo + Math.sin(t*p.speed + i) * 0.22; p.mesh.rotation.y += 0.002; }); renderer.render(scene,camera); requestAnimationFrame(animate); } animate();
+
+        window.addEventListener('resize', ()=>{ renderer.setSize(window.innerWidth, window.innerHeight); camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); });
       });
     })();
   </script>
