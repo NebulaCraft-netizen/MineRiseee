@@ -1,61 +1,50 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MineRise — Store</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MineRise Store 🎃</title>
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <div class="bg-animated" aria-hidden="true">
-    <div class="fog"></div>
-    <svg class="bat" style="top:10%;left:-20%;" viewBox="0 0 200 100"><path d="M0 60 Q30 20 60 60 T120 60 T180 60" fill="rgba(0,0,0,0.55)"/></svg>
-  </div>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">MineRise</a>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="store.html" class="active">Store</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <button id="theme-toggle">🌓</button>
+    </nav>
+  </header>
 
-  <div class="site">
-    <header>
-      <div class="brand">
-        <div class="logo">MR</div>
-        <div><h1>MineRise Store</h1><p class="muted">Buy ranks & cosmetics</p></div>
+  <main class="store">
+    <h1 class="glow-title">🛒 MineRise Store</h1>
+    <p class="subtitle">Support the server and claim epic rewards!</p>
+    <div class="store-grid">
+      <div class="store-card">
+        <h2>🎩 VIP Rank</h2>
+        <p>Exclusive tag, cosmetics, and 2x coins.</p>
+        <button class="glow-btn">Buy Now</button>
       </div>
+      <div class="store-card">
+        <h2>👑 MVP Rank</h2>
+        <p>Includes VIP + access to beta content.</p>
+        <button class="glow-btn">Buy Now</button>
+      </div>
+      <div class="store-card">
+        <h2>🎁 Halloween Crate</h2>
+        <p>Win rare cosmetics and spooky gear!</p>
+        <button class="glow-btn">Buy Now</button>
+      </div>
+    </div>
+  </main>
 
-      <nav>
-        <a class="nav-btn" href="index.html">Home</a>
-        <a class="nav-btn active" href="store.html">Store</a>
-        <a class="nav-btn" href="gallery.html">Gallery</a>
-        <a class="nav-btn" href="connect.html">Connect</a>
-        <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
-      </nav>
-    </header>
-
-    <main>
-      <section class="card">
-        <h2>Ranks & Specials</h2>
-        <p class="muted">Support the server and unlock Halloween cosmetics.</p>
-
-        <div class="store-grid" style="margin-top:16px">
-          <div class="store-card">
-            <h3>Silver</h3><p class="muted">Starter perks</p>
-            <div style="margin-top:10px"><button class="btn primary">Buy • ₹149</button></div>
-          </div>
-          <div class="store-card">
-            <h3>Gold</h3><p class="muted">Extra perks</p>
-            <div style="margin-top:10px"><button class="btn primary">Buy • ₹349</button></div>
-          </div>
-          <div class="store-card">
-            <h3>Diamond</h3><p class="muted">Premium perks</p>
-            <div style="margin-top:10px"><button class="btn primary">Buy • ₹749</button></div>
-          </div>
-          <div class="store-card">
-            <h3>Titan</h3><p class="muted">All perks</p>
-            <div style="margin-top:10px"><button class="btn primary">Buy • ₹1499</button></div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer>© <span id="year2"></span> MineRise Store</footer>
-  </div>
+  <footer>
+    <p>🎃 MineRise &copy; 2025 | play.minerise.fun</p>
+  </footer>
 
   <script src="assets/script.js"></script>
 </body>
