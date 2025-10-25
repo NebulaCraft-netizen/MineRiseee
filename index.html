@@ -4,10 +4,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MineRise — Home</title>
+
+  <!-- main stylesheet (must exist at assets/styles.css) -->
   <link rel="stylesheet" href="assets/styles.css">
+
+  <!-- small inline safety CSS so page never looks totally broken while debugging -->
+  <style>
+    /* fallback minimal visuals if styles.css fails to load */
+    :root{ --bg:#070617; --text:#eef6ff; }
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;}
+    a{color:#ffd59a}
+    .site{max-width:1200px;margin:18px auto;padding:12px}
+  </style>
 </head>
 <body>
-  <!-- optional 3D background & fog -->
+  <!-- 3D scene container (threeScene will create a canvas inside if available) -->
   <div id="three-container" aria-hidden="true"></div>
   <div class="fog-overlay" aria-hidden="true"></div>
 
@@ -58,8 +69,34 @@
     <footer>© <span id="year"></span> MineRise • <a href="connect.html">Connect</a></footer>
   </div>
 
+  <!-- SCRIPT ORDER: threeScene -> main UI helpers -> site entry -->
+  <script>
+    console.log('[index] Loading page — verifying asset paths...');
+  </script>
+
+  <!-- 3D (optional) -->
   <script src="scripts/threeScene.js"></script>
+
+  <!-- Figma UI helpers -->
   <script src="scripts/main.js"></script>
+
+  <!-- main site entry (theme, copy IP, init 3D) -->
   <script src="assets/script.js"></script>
+
+  <script>
+    // dev-time diagnostics to show whether files loaded
+    window.addEventListener('load', () => {
+      console.group('MineRise Diagnostics');
+      console.log('styles loaded? (check network/errors in console)');
+      console.log('window.initThree:', typeof window.initThree === 'function' ? 'present' : 'missing');
+      console.log('scripts.main present?', typeof window === 'object' ? 'window ok' : 'window missing');
+      console.groupEnd();
+      // attempt to initialise three if it loaded after assets/script
+      if (typeof window.initThree === 'function') {
+        try { window.initThree({ ip: document.getElementById('server-ip')?.textContent || 'Play.MineRise.Fun' }); }
+        catch(e){ console.warn('initThree error', e); }
+      }
+    });
+  </script>
 </body>
 </html>
