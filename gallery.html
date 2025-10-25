@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <div class="bg-animated" aria-hidden="true"><div class="fog"></div></div>
+  <div id="three-container" aria-hidden="true"></div>
+  <div class="fog-overlay" aria-hidden="true"></div>
 
   <div class="site">
     <header>
@@ -19,7 +20,7 @@
       <nav>
         <a class="nav-btn" href="index.html">Home</a>
         <a class="nav-btn" href="store.html">Store</a>
-        <a class="nav-btn active" href="gallery.html">Gallery</a>
+        <a class="nav-btn" href="gallery.html">Gallery</a>
         <a class="nav-btn" href="connect.html">Connect</a>
         <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
       </nav>
@@ -39,6 +40,8 @@
     <footer>© <span id="year3"></span> MineRise Gallery</footer>
   </div>
 
+  <script src="scripts/threeScene.js"></script>
+  <script src="scripts/main.js"></script>
   <script src="assets/script.js"></script>
 </body>
 </html>
