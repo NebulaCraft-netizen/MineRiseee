@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MineRise — Connect</title>
+  <title>Connect — MineRise</title>
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <div class="bg-animated" aria-hidden="true"><div class="fog"></div></div>
+  <div id="three-container" aria-hidden="true"></div>
+  <div class="fog-overlay" aria-hidden="true"></div>
 
   <div class="site">
     <header>
@@ -20,7 +21,7 @@
         <a class="nav-btn" href="index.html">Home</a>
         <a class="nav-btn" href="store.html">Store</a>
         <a class="nav-btn" href="gallery.html">Gallery</a>
-        <a class="nav-btn active" href="connect.html">Connect</a>
+        <a class="nav-btn" href="connect.html">Connect</a>
         <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
       </nav>
     </header>
@@ -36,9 +37,11 @@
       </section>
     </main>
 
-    <footer>© <span id="year4"></span> MineRise</footer>
+    <footer>© MineRise</footer>
   </div>
 
+  <script src="scripts/threeScene.js"></script>
+  <script src="scripts/main.js"></script>
   <script src="assets/script.js"></script>
 </body>
 </html>
