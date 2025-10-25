@@ -1,51 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About — MineRise 👻</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — MineRise</title>
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <header>
-    <nav class="navbar">
-      <a href="index.html" class="logo">MineRise</a>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="store.html">Store</a></li>
-        <li><a href="about.html" class="active">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <button id="theme-toggle">🌓</button>
-    </nav>
-  </header>
+  <div id="three-container" aria-hidden="true"></div>
+  <div class="fog-overlay" aria-hidden="true"></div>
 
-  <main class="about">
-    <section class="about-section">
-      <h1 class="glow-title">👻 About MineRise</h1>
-      <p>MineRise is a community-driven Minecraft network with epic PvP, custom events, and a friendly atmosphere. Every Halloween, our world transforms into a spooky experience filled with secrets, rewards, and chilling adventures.</p>
-    </section>
-
-    <section class="about-features">
-      <div class="feature">
-        <h2>⚔️ Competitive PvP</h2>
-        <p>Face off in ranked battles and climb the seasonal leaderboards.</p>
+  <div class="site">
+    <header>
+      <div class="brand">
+        <div class="logo">MR</div>
+        <div><h1>About MineRise</h1><p class="muted">Who we are & what we do</p></div>
       </div>
-      <div class="feature">
-        <h2>🎃 Halloween Events</h2>
-        <p>Join haunted mazes, spooky hunts, and special October tournaments.</p>
-      </div>
-      <div class="feature">
-        <h2>💎 Unique Cosmetics</h2>
-        <p>Unlock auras, trails, and outfits as you play and slay!</p>
-      </div>
-    </section>
-  </main>
 
-  <footer>
-    <p>👻 Made with ❤️ by MineRise | play.minerise.fun</p>
-  </footer>
+      <nav>
+        <a class="nav-btn" href="index.html">Home</a>
+        <a class="nav-btn" href="store.html">Store</a>
+        <a class="nav-btn" href="gallery.html">Gallery</a>
+        <a class="nav-btn" href="connect.html">Connect</a>
+        <button id="theme-toggle" class="theme-btn" title="Toggle theme">🌙</button>
+      </nav>
+    </header>
 
+    <main>
+      <section class="about-section card">
+        <h2 class="glow-title">About MineRise</h2>
+        <p>MineRise is a community-driven Minecraft network with epic PvP, special events, and a committed staff team. Each Halloween we run themed events, cosmetics, and rewards for players — join us!</p>
+      </section>
+
+      <section class="card" style="margin-top:12px">
+        <h3>Our values</h3>
+        <ul>
+          <li>Community first</li>
+          <li>Fair competitive gameplay</li>
+          <li>Creative events</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>© <span id="year4"></span> MineRise</footer>
+  </div>
+
+  <script src="scripts/threeScene.js"></script>
+  <script src="scripts/main.js"></script>
   <script src="assets/script.js"></script>
 </body>
 </html>
